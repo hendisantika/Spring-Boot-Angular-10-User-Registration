@@ -1,6 +1,7 @@
 package com.hendisantika.userservice.service;
 
 import com.hendisantika.userservice.dto.SignUpRequest;
+import com.hendisantika.userservice.entity.Role;
 import com.hendisantika.userservice.entity.User;
 import com.hendisantika.userservice.exception.UserAlreadyExistAuthenticationException;
 import com.hendisantika.userservice.repository.RoleRepository;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 
 /**
  * Created by IntelliJ IDEA.
@@ -52,5 +54,20 @@ public class UserServiceImpl implements UserService {
         userRepository.flush();
         return user;
     }
+
+    private User buildUser(final SignUpRequest formDTO) {
+        User user = new User();
+        user.setDisplayName(formDTO.getDisplayName());
+        user.setEmail(formDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(formDTO.getPassword()));
+        final HashSet<Role> roles = new HashSet<Role>();
+        roles.add(roleRepository.findByName(Role.ROLE_USER));
+        user.setRoles(roles);
+        user.setProvider(formDTO.getSocialProvider().getProviderType());
+        user.setEnabled(true);
+        user.setProviderUserId(formDTO.getProviderUserId());
+        return user;
+    }
+
 
 }
