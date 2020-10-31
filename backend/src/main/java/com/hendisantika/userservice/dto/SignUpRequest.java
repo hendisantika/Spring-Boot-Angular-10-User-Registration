@@ -1,5 +1,6 @@
 package com.hendisantika.userservice.dto;
 
+import com.hendisantika.userservice.validator.PasswordMatches;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
