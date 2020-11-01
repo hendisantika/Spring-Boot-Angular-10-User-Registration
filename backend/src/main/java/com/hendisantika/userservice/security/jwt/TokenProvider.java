@@ -1,4 +1,4 @@
-package com.hendisantika.userservice.jwt;
+package com.hendisantika.userservice.security.jwt;
 
 import com.hendisantika.userservice.config.AppProperties;
 import com.hendisantika.userservice.dto.LocalUser;

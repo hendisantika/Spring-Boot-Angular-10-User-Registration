@@ -1,4 +1,4 @@
-package com.hendisantika.userservice.jwt;
+package com.hendisantika.userservice.security.jwt;
 
 import com.hendisantika.userservice.service.LocalUserDetailService;
 import org.slf4j.Logger;
