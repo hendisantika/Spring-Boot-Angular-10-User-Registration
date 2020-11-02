@@ -10,6 +10,7 @@ import com.hendisantika.userservice.exception.OAuth2AuthenticationProcessingExce
 import com.hendisantika.userservice.exception.UserAlreadyExistAuthenticationException;
 import com.hendisantika.userservice.repository.RoleRepository;
 import com.hendisantika.userservice.repository.UserRepository;
+import com.hendisantika.userservice.security.oauth2.user.OAuth2UserInfoFactory;
 import com.hendisantika.userservice.util.GeneralUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
