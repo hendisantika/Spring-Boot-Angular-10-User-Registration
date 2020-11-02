@@ -1,13 +1,17 @@
 package com.hendisantika.userservice.controller;
 
+import com.hendisantika.userservice.dto.ApiResponse;
 import com.hendisantika.userservice.dto.JwtAuthenticationResponse;
 import com.hendisantika.userservice.dto.LocalUser;
 import com.hendisantika.userservice.dto.LoginRequest;
+import com.hendisantika.userservice.dto.SignUpRequest;
+import com.hendisantika.userservice.exception.UserAlreadyExistAuthenticationException;
 import com.hendisantika.userservice.security.jwt.TokenProvider;
 import com.hendisantika.userservice.service.UserService;
 import com.hendisantika.userservice.util.GeneralUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -52,5 +56,17 @@ public class AuthController {
         String jwt = tokenProvider.createToken(authentication);
         LocalUser localUser = (LocalUser) authentication.getPrincipal();
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, GeneralUtils.buildUserInfo(localUser)));
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+        try {
+            userService.registerNewUser(signUpRequest);
+        } catch (UserAlreadyExistAuthenticationException e) {
+            log.error("Exception Ocurred", e);
+            return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"),
+                    HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok().body(new ApiResponse(true, "User registered successfully"));
     }
 }
