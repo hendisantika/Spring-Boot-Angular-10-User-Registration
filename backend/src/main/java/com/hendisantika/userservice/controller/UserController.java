@@ -1,5 +1,6 @@
 package com.hendisantika.userservice.controller;
 
+import com.hendisantika.userservice.config.CurrentUser;
 import com.hendisantika.userservice.dto.LocalUser;
 import com.hendisantika.userservice.util.GeneralUtils;
 import org.springframework.http.ResponseEntity;
