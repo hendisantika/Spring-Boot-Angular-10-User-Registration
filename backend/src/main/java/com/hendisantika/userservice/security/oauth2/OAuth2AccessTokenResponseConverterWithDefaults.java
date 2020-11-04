@@ -31,7 +31,7 @@ public class OAuth2AccessTokenResponseConverterWithDefaults implements Converter
                     OAuth2ParameterNames.REFRESH_TOKEN, OAuth2ParameterNames.SCOPE)
             .collect(Collectors.toSet());
 
-    private final OAuth2AccessToken.TokenType defaultAccessTokenType = OAuth2AccessToken.TokenType.BEARER;
+    private OAuth2AccessToken.TokenType defaultAccessTokenType = OAuth2AccessToken.TokenType.BEARER;
 
     @Override
     public OAuth2AccessTokenResponse convert(Map<String, String> tokenResponseParameters) {
@@ -67,5 +67,4 @@ public class OAuth2AccessTokenResponseConverterWithDefaults implements Converter
         Assert.notNull(defaultAccessTokenType, "defaultAccessTokenType cannot be null");
         this.defaultAccessTokenType = defaultAccessTokenType;
     }
-
 }

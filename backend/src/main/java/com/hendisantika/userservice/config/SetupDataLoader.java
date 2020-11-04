@@ -28,7 +28,7 @@ import java.util.Set;
 @Component
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
-    private final boolean alreadySetup = false;
+    private boolean alreadySetup = false;
 
     @Autowired
     private UserRepository userRepository;
@@ -60,7 +60,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
             user = new User();
             user.setDisplayName("Admin");
             user.setEmail(email);
-            user.setPassword(passwordEncoder.encode("admin@"));
+            user.setPassword(passwordEncoder.encode("12345"));
             user.setRoles(roles);
             user.setProvider(SocialProvider.LOCAL.getProviderType());
             user.setEnabled(true);
