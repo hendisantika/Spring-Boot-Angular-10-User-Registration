@@ -1,9 +1,9 @@
 package com.hendisantika.userservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,8 +30,8 @@ import java.util.Set;
  */
 @Entity
 @NoArgsConstructor
-@Getter
-@Setter
+@AllArgsConstructor
+@Data
 public class User implements Serializable {
 
     /**

@@ -1,8 +1,8 @@
 package com.hendisantika.userservice.dto;
 
-import com.hendisantika.userservice.entity.User;
 import com.hendisantika.userservice.util.GeneralUtils;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -24,13 +24,13 @@ public class LocalUser extends User implements OAuth2User, OidcUser {
     private static final long serialVersionUID = -2845160792248762779L;
     private final OidcIdToken idToken;
     private final OidcUserInfo userInfo;
-    private final User user;
+    private final com.hendisantika.userservice.entity.User user;
     private Map<String, Object> attributes;
 
     public LocalUser(final String userID, final String password, final boolean enabled,
                      final boolean accountNonExpired, final boolean credentialsNonExpired,
                      final boolean accountNonLocked, final Collection<? extends GrantedAuthority> authorities,
-                     final User user) {
+                     final com.hendisantika.userservice.entity.User user) {
         this(userID, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities, user
                 , null, null);
     }
@@ -38,7 +38,7 @@ public class LocalUser extends User implements OAuth2User, OidcUser {
     public LocalUser(final String userID, final String password, final boolean enabled,
                      final boolean accountNonExpired, final boolean credentialsNonExpired,
                      final boolean accountNonLocked, final Collection<? extends GrantedAuthority> authorities,
-                     final User user, OidcIdToken idToken,
+                     final com.hendisantika.userservice.entity.User user, OidcIdToken idToken,
                      OidcUserInfo userInfo) {
         super(userID, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.user = user;
@@ -46,7 +46,8 @@ public class LocalUser extends User implements OAuth2User, OidcUser {
         this.userInfo = userInfo;
     }
 
-    public static LocalUser create(User user, Map<String, Object> attributes, OidcIdToken idToken,
+    public static LocalUser create(com.hendisantika.userservice.entity.User user, Map<String, Object> attributes,
+                                   OidcIdToken idToken,
                                    OidcUserInfo userInfo) {
         LocalUser localUser = new LocalUser(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true,
                 GeneralUtils.buildSimpleGrantedAuthorities(user.getRoles()),
@@ -84,7 +85,7 @@ public class LocalUser extends User implements OAuth2User, OidcUser {
         return this.idToken;
     }
 
-    public User getUser() {
+    public com.hendisantika.userservice.entity.User getUser() {
         return user;
     }
 }
