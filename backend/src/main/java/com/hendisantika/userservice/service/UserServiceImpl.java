@@ -1,7 +1,6 @@
 package com.hendisantika.userservice.service;
 
 import com.hendisantika.userservice.dto.LocalUser;
-import com.hendisantika.userservice.dto.OAuth2UserInfo;
 import com.hendisantika.userservice.dto.SignUpRequest;
 import com.hendisantika.userservice.dto.SocialProvider;
 import com.hendisantika.userservice.entity.Role;
@@ -10,6 +9,7 @@ import com.hendisantika.userservice.exception.OAuth2AuthenticationProcessingExce
 import com.hendisantika.userservice.exception.UserAlreadyExistAuthenticationException;
 import com.hendisantika.userservice.repository.RoleRepository;
 import com.hendisantika.userservice.repository.UserRepository;
+import com.hendisantika.userservice.security.oauth2.user.OAuth2UserInfo;
 import com.hendisantika.userservice.security.oauth2.user.OAuth2UserInfoFactory;
 import com.hendisantika.userservice.util.GeneralUtils;
 import org.springframework.beans.factory.annotation.Autowired;
