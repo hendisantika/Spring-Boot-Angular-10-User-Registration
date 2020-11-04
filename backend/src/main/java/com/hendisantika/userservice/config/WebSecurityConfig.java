@@ -1,10 +1,13 @@
 package com.hendisantika.userservice.config;
 
+import com.hendisantika.userservice.security.jwt.TokenAuthenticationFilter;
 import com.hendisantika.userservice.security.oauth2.CustomOAuth2UserService;
 import com.hendisantika.userservice.security.oauth2.CustomOidcUserService;
+import com.hendisantika.userservice.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.hendisantika.userservice.security.oauth2.OAuth2AuthenticationFailureHandler;
 import com.hendisantika.userservice.security.oauth2.OAuth2AuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -81,5 +84,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Add our custom Token based authentication filter
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean
+    public TokenAuthenticationFilter tokenAuthenticationFilter() {
+        return new TokenAuthenticationFilter();
+    }
+
+    /*
+     * By default, Spring OAuth2 uses
+     * HttpSessionOAuth2AuthorizationRequestRepository to save the authorization
+     * request. But, since our service is stateless, we can't save it in the
+     * session. We'll save the request in a Base64 encoded cookie instead.
+     */
+    @Bean
+    public HttpCookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository() {
+        return new HttpCookieOAuth2AuthorizationRequestRepository();
     }
 }
