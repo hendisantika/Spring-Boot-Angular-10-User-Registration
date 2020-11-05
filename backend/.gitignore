@@ -30,3 +30,17 @@ build/
 
 ### VS Code ###
 .vscode/
+.DS_Store
+.idea/.gitignore
+.idea/.name
+.idea/Spring-Boot-Angular-10-User-Registration.iml
+.idea/codeStyles/
+.idea/compiler.xml
+.idea/google-java-format.xml
+.idea/inspectionProfiles/
+.idea/jarRepositories.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/sonarlint/
+.idea/vcs.xml
+angular-10-social-login/
