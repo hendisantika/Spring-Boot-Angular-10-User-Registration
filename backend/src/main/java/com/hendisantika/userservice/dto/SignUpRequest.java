@@ -3,8 +3,8 @@ package com.hendisantika.userservice.dto;
 import com.hendisantika.userservice.validator.PasswordMatches;
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 /**
  * Created by IntelliJ IDEA.

@@ -2,8 +2,8 @@ package com.hendisantika.userservice.validator;
 
 import com.hendisantika.userservice.dto.SignUpRequest;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * Created by IntelliJ IDEA.
