@@ -1,13 +1,92 @@
+# Dependabot configuration
+# Docs: https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference
 version: 2
 updates:
-  - package-ecosystem: maven
+  # Backend: Spring Boot (Maven)
+  - package-ecosystem: "maven"
     directory: "/backend"
     schedule:
-      interval: daily
-      time: '05:00'
-      timezone: Asia/Jakarta
+      interval: "daily"
+      time: "05:00"
+      timezone: "Asia/Jakarta"
     open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "java"
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
+    groups:
+      # Spring Boot parent + Spring managed artifacts in a single PR
+      spring-boot:
+        patterns:
+          - "org.springframework.boot*"
+          - "org.springframework*"
+      jjwt:
+        patterns:
+          - "io.jsonwebtoken*"
+      # Everything else: bundle minor/patch bumps together
+      maven-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  # Frontend: Angular (npm)
+  - package-ecosystem: "npm"
+    directory: "/angular-10-social-login"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "05:00"
+      timezone: "Asia/Jakarta"
+    open-pull-requests-limit: 5
+    versioning-strategy: "increase-if-necessary"
+    labels:
+      - "dependencies"
+      - "javascript"
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
+    groups:
+      angular:
+        patterns:
+          - "@angular*"
+          - "@angular-devkit*"
+          - "zone.js"
+          - "rxjs"
+          - "tslib"
+        update-types:
+          - "minor"
+          - "patch"
+      npm-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      # Angular major upgrades need `ng update` migrations, handle them manually
+      - dependency-name: "@angular*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "@angular-devkit*"
+        update-types: [ "version-update:semver-major" ]
+
+  # GitHub Actions used in workflows
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
+      time: "05:00"
+      timezone: "Asia/Jakarta"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github_actions"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
