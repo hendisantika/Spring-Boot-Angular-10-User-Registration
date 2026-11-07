@@ -139,8 +139,9 @@ curl http://localhost:8080/api/user/me -H "Authorization: Bearer <accessToken>"
 [Dependabot](.github/dependabot.yml) keeps dependencies up to date:
 
 - **Maven** (`/backend`) — daily, grouped: Spring, jjwt, other minor/patch updates
-- **npm** (`/angular-10-social-login`) — weekly, grouped minor/patch; Angular majors and Angular-10-incompatible
-  tooling bumps (`@angular-devkit/build-angular`/`zone.js` 0.x minors, TypeScript, `@types/node` majors) are ignored (use `ng update`)
+- **npm** (`/angular-10-social-login`) — weekly, grouped minor/patch; all major bumps (and 0.x-minor bumps of
+  `@angular-devkit/build-angular` / `zone.js`, TypeScript minors) are ignored because the Angular 10 toolchain is
+  version-locked — upgrade manually with `ng update`
 - **GitHub Actions** — weekly, grouped into a single PR
 
 ## Author

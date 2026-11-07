@@ -65,10 +65,9 @@ updates:
           - "minor"
           - "patch"
     ignore:
-      # Angular major upgrades need `ng update` migrations, handle them manually
-      - dependency-name: "@angular*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "@angular-devkit*"
+      # Legacy Angular 10 app: the whole toolchain (Angular, TypeScript 3.9, karma 5, jasmine 3)
+      # is version-locked, so major upgrades must be done manually via `ng update`
+      - dependency-name: "*"
         update-types: [ "version-update:semver-major" ]
       # 0.x packages: a "minor" bump is a breaking/major one
       # (build-angular 0.1002.x = Angular 10, 0.1102.x = Angular 11; zone.js must stay ~0.10 for Angular 10)
@@ -78,11 +77,7 @@ updates:
         update-types: [ "version-update:semver-minor" ]
       # Tooling pinned to what Angular 10 supports
       - dependency-name: "typescript"
-        update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
-      - dependency-name: "@types/node"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "rxjs"
-        update-types: [ "version-update:semver-major" ]
+        update-types: [ "version-update:semver-minor" ]
 
   # GitHub Actions used in workflows
   - package-ecosystem: "github-actions"
