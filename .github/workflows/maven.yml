@@ -64,4 +64,4 @@ jobs:
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@a64327a7329c9939cf675e458452febe1894a70c
       with:
-        directory: backend
+        directory: ${{ github.workspace }}/backend
