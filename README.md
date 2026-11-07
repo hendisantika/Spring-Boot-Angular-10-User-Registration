@@ -1,6 +1,7 @@
 # Spring-Boot-Angular-10-User-Registration
 
 [![Java CI with Maven](https://github.com/hendisantika/Spring-Boot-Angular-10-User-Registration/actions/workflows/maven.yml/badge.svg)](https://github.com/hendisantika/Spring-Boot-Angular-10-User-Registration/actions/workflows/maven.yml)
+[![Angular CI](https://github.com/hendisantika/Spring-Boot-Angular-10-User-Registration/actions/workflows/frontend.yml/badge.svg)](https://github.com/hendisantika/Spring-Boot-Angular-10-User-Registration/actions/workflows/frontend.yml)
 ![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.x-6DB33F?logo=springboot)
 ![Angular](https://img.shields.io/badge/Angular-10-DD0031?logo=angular)
@@ -8,6 +9,12 @@
 
 Spring Boot + Angular 10 User Registration with JWT authentication and OAuth2 Social Login
 (Google, Facebook, GitHub and LinkedIn).
+
+## Screenshots
+
+| Sign Up | Login | Profile |
+|:-------:|:-----:|:-------:|
+| ![Sign Up](docs/screenshots/register.png) | ![Login](docs/screenshots/login.png) | ![Profile](docs/screenshots/profile.png) |
 
 ## Tech Stack
 
@@ -17,7 +24,7 @@ Spring Boot + Angular 10 User Registration with JWT authentication and OAuth2 So
 | Database | MySQL 8 (runtime), H2 in-memory (tests)                                                     |
 | Frontend | Angular 10                                                                                  |
 | Build    | Maven Wrapper (Maven 3.9.x), npm                                                            |
-| CI/CD    | GitHub Actions (build & test on JDK 25, dependency graph submission), Dependabot            |
+| CI/CD    | GitHub Actions (backend on JDK 25, frontend on Node 20), Dependabot                         |
 
 ## Project Structure
 
@@ -25,9 +32,11 @@ Spring Boot + Angular 10 User Registration with JWT authentication and OAuth2 So
 .
 ├── backend/                  # Spring Boot REST API (user-service)
 ├── angular-10-social-login/  # Angular 10 frontend
+├── docs/screenshots/         # README screenshots
 └── .github/
-    ├── workflows/maven.yml   # CI: build & test backend with JDK 25
-    └── dependabot.yml        # Automated dependency updates
+    ├── workflows/maven.yml    # CI: build & test backend with JDK 25
+    ├── workflows/frontend.yml # CI: build & test Angular frontend (Node 20)
+    └── dependabot.yml         # Automated dependency updates
 ```
 
 ## Prerequisites
@@ -80,6 +89,25 @@ npx ng serve --port 8081
 Open `http://localhost:8081`. The frontend calls the backend at `http://localhost:8080/`
 (see `src/app/common/app.constants.ts`).
 
+> **Note:** Angular 10 uses webpack 4. On Node.js 17+ set `NODE_OPTIONS=--openssl-legacy-provider`
+> before running `ng serve` / `ng build` / `ng test`.
+
+### Build & Test
+
+```bash
+cd angular-10-social-login
+export NODE_OPTIONS=--openssl-legacy-provider
+npx ng build --prod
+npx ng test --watch=false --browsers=ChromeHeadlessCI
+```
+
+## Continuous Integration
+
+| Workflow | Trigger | Steps |
+|----------|---------|-------|
+| [Java CI with Maven](.github/workflows/maven.yml) | push / PR to `main` | JDK 25 → `./mvnw clean verify` → dependency graph submission |
+| [Angular CI](.github/workflows/frontend.yml) | push / PR to `main` touching `angular-10-social-login/**` | Node 20 → `npm ci` → `ng build --prod` → `ng test` (Chrome Headless) → upload `dist` artifact |
+
 ## API Endpoints
 
 | Method | Endpoint                                  | Description                                  | Auth         |
@@ -111,7 +139,8 @@ curl http://localhost:8080/api/user/me -H "Authorization: Bearer <accessToken>"
 [Dependabot](.github/dependabot.yml) keeps dependencies up to date:
 
 - **Maven** (`/backend`) — daily, grouped: Spring, jjwt, other minor/patch updates
-- **npm** (`/angular-10-social-login`) — weekly, grouped minor/patch, Angular major upgrades are ignored (use `ng update`)
+- **npm** (`/angular-10-social-login`) — weekly, grouped minor/patch; Angular majors and Angular-10-incompatible
+  tooling bumps (`@angular-devkit/build-angular`/`zone.js` 0.x minors, TypeScript, `@types/node` majors) are ignored (use `ng update`)
 - **GitHub Actions** — weekly, grouped into a single PR
 
 ## Author
