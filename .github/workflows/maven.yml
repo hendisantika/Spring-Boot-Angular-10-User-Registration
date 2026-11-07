@@ -62,6 +62,8 @@ jobs:
         cache: maven
         cache-dependency-path: backend/pom.xml
     - name: Update dependency graph
+      # Requires "Dependency graph" to be enabled in Settings > Code security; don't fail the build if it isn't.
+      continue-on-error: true
       uses: advanced-security/maven-dependency-submission-action@a64327a7329c9939cf675e458452febe1894a70c
       with:
         directory: ${{ github.workspace }}/backend
