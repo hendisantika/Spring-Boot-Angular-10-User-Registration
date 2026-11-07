@@ -1,3 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BoardAdminComponent } from './board-admin.component';
@@ -8,7 +12,9 @@ describe('BoardAdminComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BoardAdminComponent ]
+      imports: [HttpClientTestingModule, RouterTestingModule, FormsModule],
+      declarations: [ BoardAdminComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

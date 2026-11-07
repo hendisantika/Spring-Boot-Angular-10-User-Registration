@@ -12,6 +12,13 @@ module.exports = function (config) {
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
+    // Serve static assets from Karma itself (avoids webpack-dev-middleware range-header crash on newer Node)
+    files: [
+      { pattern: 'src/assets/**', watched: false, included: false, served: true, nocache: false }
+    ],
+    proxies: {
+      '/assets/': '/base/src/assets/'
+    },
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
@@ -26,6 +33,13 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
+    customLaunchers: {
+      // Headless Chrome for CI (GitHub Actions)
+      ChromeHeadlessCI: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox', '--disable-gpu']
+      }
+    },
     singleRun: false,
     restartOnFileChange: true
   });
